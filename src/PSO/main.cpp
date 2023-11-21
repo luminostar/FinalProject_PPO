@@ -1,91 +1,108 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <cmath>
+#include <algorithm>
+
 using namespace std;
 
-float f(float x) {
-    return -2 * x * sin(x);
+double f(double x) {
+    return -2 * x * sin(x); // Contoh fungsi f(x) dengan sin(x)
 }
 
 class PSO {
 private:
-    vector<float> x;
-    vector<float> v;
-    vector<float> c;
-    vector<float> r;
-    float w;
-    vector<float> oldx;
-    vector<float> pBest;
-    float gBest;
-
+    vector<double> x, v, oldX, pBest;
+    double w;
+    double gBest;
+    vector<double> c, r;
 
 public:
-    PSO(vector<float> x_val, vector<float> v_val, vector<float> c_val, vector<float> r_val, float w_val) {
-        x_val = x;
-        v_val = v;
-        c_val = c;
-        r_val = r;
-        w_val = w;
-
-        oldx = x_val;
-        pBest = {};
+    PSO(vector<double> x_vals, vector<double> v_vals, vector<double> c_vals, vector<double> r_vals, double w_val)
+        : x(x_vals), v(v_vals), c(c_vals), r(r_vals), w(w_val) {
+        oldX = x;
+        pBest = x;
         gBest = 0.0;
-    };
+    }
 
     void findPBest() {
-        for(int i = 0; i < x.size(); i++) {
+        for (size_t i = 0; i < x.size(); ++i) {
             if (f(x[i]) < f(pBest[i])) {
                 pBest[i] = x[i];
             } else {
-                pBest[i] = oldx[i];
+                pBest[i] = oldX[i];
             }
-        }  
+        }
     }
 
     void findGBest() {
-        vector<float> fValues;
+        double minVal = f(x[0]);
+        size_t minIndex = 0; 
 
-        for (float x_val : x) {
-            fValues.push_back(f(x_val));
+        for (size_t i = 1; i < x.size(); ++i) {
+            double fx = f(x[i]);
+            if (fx < minVal) {
+                minVal = fx;
+                minIndex = i;
+            }
         }
-        auto min_it = min_element(fValues.begin(), fValues.end());
-        int min_index = distance(fValues.begin(), min_it);
-
-        gBest = x[min_index];
+        gBest = x[minIndex]; // Set gBest ke nilai x dengan indeks minimum
     }
 
+
     void updateV() {
-        for(int i; i < x.size(); i++) {
-            v[i] = (w * v[i]) + (c[0] * r[0] * (pBest[i] - x[i])) + (c[1] * r[1] *(gBest - x[i])) ;
+        for (size_t i = 0; i < x.size(); ++i) {
+            v[i] = (w * v[i]) + (c[0] * r[0] * (pBest[i] - x[i])) + (c[1] * r[1] * (gBest - x[i]));
         }
     }
 
     void updateX() {
-        for(int i; i < x.size(); i++) {
-            oldx[i] = x[i];
+        for (size_t i = 0; i < x.size(); ++i) {
+            oldX[i] = x[i];
             x[i] += v[i];
         }
     }
 
-    void iterasi(int n) {
-        cout << "Iterasi 0" << endl;
-
+    void iterate(int n) {
+        cout << "Iterasi ke-0" << endl;
         cout << "x = ";
-        for (float x_val : x) {
-            cout << x_val << " ";
+        for (const auto& val : x) {
+            cout << val << " ";
+        }
+        cout << endl << "v = ";
+        for (const auto& val : v) {
+            cout << val << " ";
         }
         cout << endl;
 
-        cout << "v = ";
-        for (float v_val : v) {
-            cout << v_val << " ";
+        for (int i = 0; i < n; ++i) {
+            cout << "Iterasi ke-" << i + 1 << endl;
+            findPBest();
+            findGBest();
+            updateV();
+            updateX();
+
+            cout << "x = ";
+            for (const auto& val : x) {
+                cout << val << " ";
+            }
+            cout << endl << "f(x) = ";
+            for (const auto& val : x) {
+                cout << f(val) << " ";
+            }
+            cout << endl << endl;
+        }
     }
-    cout << endl;
-}
 };
 
 int main() {
-    cout << "Hello World" << endl;
+    vector<double> x = {1.0, M_PI / 2, M_PI}; // Contoh nilai x dengan Pi
+    vector<double> v = {0, 0, 0};
+    vector<double> c = {0.5, 1}; // Inisialisasi koefisien c
+    vector<double> r = {1.0, 1.0}; // Inisialisasi nilai randomness r
+    double w = 1;
+
+    PSO pso(x, v, c, r, w);
+    pso.iterate(10);
+
     return 0;
 }
