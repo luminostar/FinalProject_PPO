@@ -55,6 +55,18 @@ public:
         gBest = x[min_index];
     }
 
+    void updateV() {
+        for(int i; i < x.size(); i++) {
+            v[i] = (w * v[i]) + (c[0] * r[0] * (pBest[i] - x[i])) + (c[1] * r[1] *(gBest - x[i])) ;
+        }
+    }
+
+    void updateX() {
+        for(int i; i < x.size(); i++) {
+            oldx[i] = x[i];
+            x[i] += v[i];
+        }
+    }
 };
 
 int main() {
