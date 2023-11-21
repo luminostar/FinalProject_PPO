@@ -67,6 +67,22 @@ public:
             x[i] += v[i];
         }
     }
+
+    void iterasi(int n) {
+        cout << "Iterasi 0" << endl;
+
+        cout << "x = ";
+        for (float x_val : x) {
+            cout << x_val << " ";
+        }
+        cout << endl;
+
+        cout << "v = ";
+        for (float v_val : v) {
+            cout << v_val << " ";
+    }
+    cout << endl;
+}
 };
 
 int main() {
