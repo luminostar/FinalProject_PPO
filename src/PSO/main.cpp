@@ -11,14 +11,18 @@ double f(double x) {
 
 class PSO {
 private:
-    vector<double> x, v, oldX, pBest;
+    vector<double> x, v, c, r, oldX, pBest;
     double w;
     double gBest;
-    vector<double> c, r;
 
 public:
-    PSO(vector<double> x_vals, vector<double> v_vals, vector<double> c_vals, vector<double> r_vals, double w_val)
-        : x(x_vals), v(v_vals), c(c_vals), r(r_vals), w(w_val) {
+    PSO(vector<double> x_vals, vector<double> v_vals, vector<double> c_vals, vector<double> r_vals, double w_val) {
+        x = x_vals;
+        v = v_vals;
+        c = c_vals;
+        r = r_vals;
+        w = w_val;
+
         oldX = x;
         pBest = x;
         gBest = 0.0;
@@ -95,14 +99,14 @@ public:
 };
 
 int main() {
-    vector<double> x = {1.0, M_PI / 2, M_PI}; // Contoh nilai x dengan Pi
+    vector<double> x = {1.0, M_PI / 2, M_PI}; 
     vector<double> v = {0, 0, 0};
-    vector<double> c = {0.5, 1}; // Inisialisasi koefisien c
-    vector<double> r = {1.0, 1.0}; // Inisialisasi nilai randomness r
+    vector<double> c = {0.5, 1}; 
+    vector<double> r = {1.0, 1.0}; 
     double w = 1;
 
     PSO pso(x, v, c, r, w);
-    pso.iterate(10);
+    pso.iterate(100);
 
     return 0;
 }
