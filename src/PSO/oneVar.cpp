@@ -6,7 +6,7 @@
 using namespace std;
 
 double f(double x) {
-    return -2 * x * sin(x); // Contoh fungsi f(x) dengan sin(x)
+    return -2 * x * sin(x);
 }
 
 class PSO {
