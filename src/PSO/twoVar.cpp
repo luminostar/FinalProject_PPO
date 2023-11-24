@@ -166,7 +166,7 @@ public:
 };
 
 int main() {
-    vector<double> x = {1.0, -1.0, 2};
+    vector<double> x = {1.0, -1.0, 2.0};
     vector<double> y = {1.0, -1.0, 1.0};  
     vector<double> vx = {0, 0, 0};
     vector<double> vy = {0, 0, 0};
@@ -175,7 +175,7 @@ int main() {
     double w = 1.0;
 
     PSO pso(x, y, vx, c, r, w);
-    pso.iterate(100);
+    pso.iterate(50);
 
     return 0;
 }
