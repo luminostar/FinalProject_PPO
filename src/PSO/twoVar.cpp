@@ -6,70 +6,76 @@
 using namespace std;
 
 double f(double x, double y) {
-    return pow((x + y*y - 13) + (x*x + y - 9 ), 2);
+    return pow((x + y*y - 13), 2) + pow((x*x + y - 9), 2);
 }
 
 class PSO {
 private:
-    vector<double> x, y, v, c, r, oldX, oldY, pBestx, pBesty;
+    vector<double> x, y, vx, vy, c, r, oldX, oldY, pBestX, pBestY;
     double w;
-    double gBestx;
-    double gBesty;
+    double gBestX;
+    double gBestY;
 
 public:
     PSO(vector<double> x_vals, vector<double> y_vals, vector<double> v_vals, vector<double> c_vals, vector<double> r_vals, double w_val) {
         x = x_vals;
         y = y_vals;
-        v = v_vals;
+        vx = v_vals;
+        vy = v_vals;
         c = c_vals;
         r = r_vals;
         w = w_val;
 
         oldX = x;
         oldY = y;
-        pBestx = x;
-        pBesty = y;
-        gBestx = 0.0;
-        gBesty = 0.0;
+        pBestX = x;
+        pBestY = y;
+        gBestX = x[min_element(x.begin(), x.end()) - x.begin()];
+        gBestY = y[min_element(y.begin(), y.end()) - y.begin()];
+
     }
 
     void findpBest() {
         for (size_t i = 0; i < x.size(); ++i) {
-            value = f(x[i]. y[i])
-            pBestValue = 
-            if (f(x[i]) < f(pBestx[i])) {
-                pBestx[i] = x[i];
+            double value = f(x[i], y[i]);
+            double pBestValue = f(pBestX[i], pBestY[i]);
+            if (value < pBestValue) {
+                pBestX[i] = x[i];
+                pBestY[i] = y[i];
             } else {
-                pBestx[i] = oldX[i];
+                pBestX[i] = oldX[i];
+                pBestY[i] = oldY[i];
             }
         }
     }
 
     void findGBest() {
-        double minVal = f(x[0]);
-        size_t minIndex = 0; 
+        vector<double> fValues;
 
-        for (size_t i = 1; i < x.size(); ++i) {
-            double fx = f(x[i]);
-            if (fx < minVal) {
-                minVal = fx;
-                minIndex = i;
-            }
+        for(int i = 0; i < x.size(); i++) {
+            fValues.push_back(f(x[i], y[i]));
         }
-        gBestx = x[minIndex];
+
+        auto minimumIndex = min_element(fValues.begin(), fValues.end()) - fValues.begin();
+
+        gBestX = x[minimumIndex];
+        gBestY = y[minimumIndex];
     }
 
 
     void updateV() {
-        for (size_t i = 0; i < x.size(); ++i) {
-            v[i] = (w * v[i]) + (c[0] * r[0] * (pBestx[i] - x[i])) + (c[1] * r[1] * (gBestx - x[i]));
+        for (int i = 0; i < x.size(); ++i) {
+            vx[i] = (w * vx[i]) + (c[0] * r[0] * (pBestX[i] - x[i])) + (c[1] * r[1] * (gBestX - x[i]));
+            vy[i] = (w * vy[i]) + (c[0] * r[0] * (pBestY[i] - y[i])) + (c[1] * r[1] * (gBestY - y[i]));
         }
     }
 
     void updateX() {
-        for (size_t i = 0; i < x.size(); ++i) {
+        for (int i = 0; i < x.size(); ++i) {
             oldX[i] = x[i];
-            x[i] += v[i];
+            oldY[i] = y[i];
+            x[i] += vx[i];
+            y[i] += vy[i];
         }
     }
 
@@ -79,10 +85,37 @@ public:
         for (const auto& val : x) {
             cout << val << " ";
         }
-        cout << endl << "v = ";
-        for (const auto& val : v) {
+        cout << "y = ";
+        for (const auto& val : y) {
             cout << val << " ";
         }
+        cout << endl << "vx = ";
+        for (const auto& val : vx) {
+            cout << val << " ";
+        }
+        cout << endl << "vy = ";
+        for (const auto& val : vy) {
+            cout << val << " ";
+        }
+        cout << endl << "pBestX = ";
+        for (const auto& val : pBestX) {
+            cout << val << " ";
+        }
+        cout << endl << "gBestX = " << gBestX;
+
+        cout << endl << "pBestY = ";
+        for (const auto& val : pBestY) {
+            cout << val << " ";
+        }
+        cout << endl << "gBestY = " << gBestY;
+        
+        cout << endl << "f(gBestX, gBestY) = " << f(gBestX, gBestY);
+
+        cout << endl <<"f(x,y) = ";
+        for (int i = 0; i < x.size() && i < y.size(); ++i) {
+            cout << f(x[i], y[i]) << " ";
+        }
+        cout << endl;
         cout << endl;
 
         for (int i = 0; i < n; ++i) {
@@ -96,23 +129,52 @@ public:
             for (const auto& val : x) {
                 cout << val << " ";
             }
-            cout << endl << "f(x) = ";
-            for (const auto& val : x) {
-                cout << f(val) << " ";
+            cout << "y = ";
+            for (const auto& val : y) {
+                cout << val << " ";
             }
-            cout << endl << endl;
+            cout << endl << "vx = ";
+            for (const auto& val : vx) {
+                cout << val << " ";
+            }
+            cout << endl << "vy = ";
+            for (const auto& val : vy) {
+                cout << val << " ";
+            }
+            cout << endl << "pBestX = ";
+            for (const auto& val : pBestX) {
+                cout << val << " ";
+            }
+            cout << endl << "gBestX = " << gBestX;
+
+            cout << endl << "pBest = ";
+            for (const auto& val : pBestY) {
+                cout << val << " ";
+            }
+            cout << endl << "gBestY = " << gBestY;
+            
+            cout << endl << "f(gBestX, gBestY) = " << f(gBestX, gBestY);
+
+            cout << endl << "f(x,y) = ";
+            for (int i = 0; i < x.size(); ++i) {
+                cout << f(x[i], y[i]) << " ";
+            }
+            cout << endl;
+            cout << endl;
         }
     }
 };
 
 int main() {
-    vector<double> x = {1.0, M_PI / 2, M_PI}; 
-    vector<double> v = {0, 0, 0};
-    vector<double> c = {0.5, 1}; 
+    vector<double> x = {1.0, -1.0, 2};
+    vector<double> y = {1.0, -1.0, 1.0};  
+    vector<double> vx = {0, 0, 0};
+    vector<double> vy = {0, 0, 0};
+    vector<double> c = {1.0, 0.5}; 
     vector<double> r = {1.0, 1.0}; 
-    double w = 1;
+    double w = 1.0;
 
-    PSO pso(x, v, c, r, w);
+    PSO pso(x, y, vx, c, r, w);
     pso.iterate(100);
 
     return 0;

@@ -40,9 +40,9 @@ public:
 
     void findGBest() {
         double minVal = f(x[0]);
-        size_t minIndex = 0; 
+        int minIndex = 0; 
 
-        for (size_t i = 1; i < x.size(); ++i) {
+        for (int i = 1; i < x.size(); ++i) {
             double fx = f(x[i]);
             if (fx < minVal) {
                 minVal = fx;
@@ -54,13 +54,13 @@ public:
 
 
     void updateV() {
-        for (size_t i = 0; i < x.size(); ++i) {
+        for (int i = 0; i < x.size(); ++i) {
             v[i] = (w * v[i]) + (c[0] * r[0] * (pBest[i] - x[i])) + (c[1] * r[1] * (gBest - x[i]));
         }
     }
 
     void updateX() {
-        for (size_t i = 0; i < x.size(); ++i) {
+        for (int i = 0; i < x.size(); ++i) {
             oldX[i] = x[i];
             x[i] += v[i];
         }
@@ -76,6 +76,15 @@ public:
         for (const auto& val : v) {
             cout << val << " ";
         }
+        cout << endl << "f(x) = ";
+        for (const auto& val : x) {
+            cout << f(val) << " ";
+        }
+        cout << endl << "pBest = ";
+        for (const auto& val : pBest) {
+            cout << val << " ";
+        }
+        cout << endl << "gBest = " << gBest << endl << endl;
         cout << endl;
 
         for (int i = 0; i < n; ++i) {
@@ -89,24 +98,33 @@ public:
             for (const auto& val : x) {
                 cout << val << " ";
             }
+            cout << endl << "v = ";
+            for (const auto& val : v) {
+                cout << val << " ";
+            }
             cout << endl << "f(x) = ";
             for (const auto& val : x) {
                 cout << f(val) << " ";
             }
-            cout << endl << endl;
+            cout << endl <<"pBest = ";
+            for (const auto& val : pBest) {
+                cout << val << " ";
+            }
+            cout << endl << "gBest = " << gBest << endl << endl;
         }
     }
+
 };
 
 int main() {
     vector<double> x = {1.0, M_PI / 2, M_PI}; 
     vector<double> v = {0, 0, 0};
-    vector<double> c = {0.5, 1}; 
+    vector<double> c = {0.5, 1.0}; 
     vector<double> r = {1.0, 1.0}; 
     double w = 1;
 
     PSO pso(x, v, c, r, w);
-    pso.iterate(100);
+    pso.iterate(3);
 
     return 0;
 }
