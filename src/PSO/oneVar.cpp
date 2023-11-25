@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <cstdlib>
+#include <random>
 
 using namespace std;
 
@@ -78,8 +79,16 @@ public:
         for (const auto &val : v) {
         cout << val << " ";
         }
-        cout << "\n";
-        cout << "\n";
+        cout << endl << "c = ";
+        for (const auto& val : c) {
+            cout << val << " ";
+        }
+        cout << endl << "r = ";
+        for (const auto& val : r) {
+            cout << val << " ";
+        }
+        cout << endl;
+        cout << endl;
 
         for (int i = 0; i < n; ++i) {
             cout << "Iterasi ke-" << i + 1 << endl;
@@ -100,7 +109,7 @@ public:
                 cout << val << " ";
             }
 
-            cout << endl << "gBest = " << gBest << endl 
+            cout << endl << "gBest = " << gBest << endl;
 
             findPBest();
             findGBest();
@@ -122,14 +131,27 @@ public:
 };
 
 int main() {
-    vector<double> x = {M_PI/M_PI, M_PI / 2, M_PI}; 
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<> disVar(-5.0, 5.0);
+    uniform_real_distribution<> disR(0, 1);
+
+    vector<double> x;
+    for (int i = 0; i < 3; ++i) {
+        double randNumX = disVar(gen);
+        x.push_back(randNumX);
+    } 
     vector<double> v = {0, 0, 0};
     vector<double> c = {0.5, 1.0}; 
-    vector<double> r = {1.0, 1.0}; 
+    vector<double> r;
+    for (int i = 0; i < 2; ++i) {
+        double randNumR = disR(gen);
+        r.push_back(randNumR);
+    } 
     double w = 1;
 
     PSO pso(x, v, c, r, w);
-    pso.iterate(3);
+    pso.iterate(100);
 
     return 0;
 }

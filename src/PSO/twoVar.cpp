@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <cstdlib>
+#include <random>
 
 using namespace std;
 
@@ -99,6 +100,18 @@ public:
         for (const auto& val : vy) {
             cout << val << " ";
         }
+        cout << endl << "vy = ";
+        for (const auto& val : vy) {
+            cout << val << " ";
+        }
+        cout << endl << "c = ";
+        for (const auto& val : c) {
+            cout << val << " ";
+        }
+        cout << endl << "r = ";
+        for (const auto& val : r) {
+            cout << val << " ";
+        }
         cout << endl;
         cout << endl;
 
@@ -164,16 +177,33 @@ public:
 };
 
 int main() {
-    vector<double> x = {1.0, -1.0, 2.0};
-    vector<double> y = {1.0, -1.0, 1.0};  
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<> disVar(-5.0, 5.0);
+    uniform_real_distribution<> disR(0, 1);
+
+    vector<double> x;
+    for (int i = 0; i < 3; ++i) {
+        double randNumX = disVar(gen);
+        x.push_back(randNumX);
+    }
+    vector<double> y;
+    for (int i = 0; i < 3; ++i)   {
+        double randNumY = disVar(gen);
+        y.push_back(randNumY);
+    }
     vector<double> vx = {0, 0, 0};
     vector<double> vy = {0, 0, 0};
     vector<double> c = {1.0, 0.5}; 
-    vector<double> r = {1.0, 1.0}; 
+    vector<double> r;
+    for (int i = 0; i < 2; ++i) {
+        double randNumR = disR(gen);
+        r.push_back(randNumR);
+    }
     double w = 1.0;
 
     PSO pso(x, y, vx, c, r, w);
-    pso.iterate(3);
+    pso.iterate(100);
 
     return 0;
 }
