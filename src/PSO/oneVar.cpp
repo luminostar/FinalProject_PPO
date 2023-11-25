@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <cstdlib>
 
 using namespace std;
 
@@ -29,7 +30,7 @@ public:
     }
 
     void findPBest() {
-        for (size_t i = 0; i < x.size(); ++i) {
+        for (int i = 0; i < x.size(); ++i) {
             if (f(x[i]) < f(pBest[i])) {
                 pBest[i] = x[i];
             } else {
@@ -49,7 +50,7 @@ public:
                 minIndex = i;
             }
         }
-        gBest = x[minIndex]; // Set gBest ke nilai x dengan indeks minimum
+        gBest = x[minIndex]; 
     }
 
 
@@ -67,64 +68,68 @@ public:
     }
 
     void iterate(int n) {
-        cout << "Iterasi ke-0" << endl;
+        cout << "Inisialisasi\n";
+
         cout << "x = ";
-        for (const auto& val : x) {
-            cout << val << " ";
+        for (const auto &val : x) {
+        cout << val << " ";
         }
         cout << endl << "v = ";
-        for (const auto& val : v) {
-            cout << val << " ";
+        for (const auto &val : v) {
+        cout << val << " ";
         }
-        cout << endl << "f(x) = ";
-        for (const auto& val : x) {
-            cout << f(val) << " ";
-        }
-        cout << endl << "pBest = ";
-        for (const auto& val : pBest) {
-            cout << val << " ";
-        }
-        cout << endl << "gBest = " << gBest << endl << endl;
-        cout << endl;
+        cout << "\n";
+        cout << "\n";
 
         for (int i = 0; i < n; ++i) {
             cout << "Iterasi ke-" << i + 1 << endl;
+            cout << "x = ";
+            for (const auto &val : x) {
+                cout << val << " ";
+            }
+            cout << endl << "v = ";
+            for (const auto &val : v) {
+                cout << val << " ";
+            }
+            cout << endl << "f(x) = ";
+            for (const auto &val : x) {
+                cout << f(val) << " ";
+            }
+            cout << endl << "pBest = ";
+            for (const auto &val : pBest) {
+                cout << val << " ";
+            }
+
+            cout << endl << "gBest = " << gBest << endl 
+
             findPBest();
             findGBest();
             updateV();
             updateX();
 
-            cout << "x = ";
-            for (const auto& val : x) {
+            cout << endl << "Updated x = ";
+            for (const auto &val : x) {
                 cout << val << " ";
             }
-            cout << endl << "v = ";
-            for (const auto& val : v) {
+            cout << endl << "Updated v = ";
+            for (const auto &val : v) {
                 cout << val << " ";
             }
-            cout << endl << "f(x) = ";
-            for (const auto& val : x) {
-                cout << f(val) << " ";
-            }
-            cout << endl <<"pBest = ";
-            for (const auto& val : pBest) {
-                cout << val << " ";
-            }
-            cout << endl << "gBest = " << gBest << endl << endl;
+            cout << "\n";
+            cout << "\n";
         }
     }
-
 };
 
 int main() {
-    vector<double> x = {1.0, M_PI / 2, M_PI}; 
+    vector<double> x = {M_PI/M_PI, M_PI / 2, M_PI}; 
     vector<double> v = {0, 0, 0};
     vector<double> c = {0.5, 1.0}; 
     vector<double> r = {1.0, 1.0}; 
     double w = 1;
 
     PSO pso(x, v, c, r, w);
-    pso.iterate(50);
+    pso.iterate(3);
 
     return 0;
 }

@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <cstdlib>
 
 using namespace std;
 
@@ -36,7 +37,7 @@ public:
     }
 
     void findpBest() {
-        for (size_t i = 0; i < x.size(); ++i) {
+        for (int i = 0; i < x.size(); ++i) {
             double value = f(x[i], y[i]);
             double pBestValue = f(pBestX[i], pBestY[i]);
             if (value < pBestValue) {
@@ -80,12 +81,13 @@ public:
     }
 
     void iterate(int n) {
-        cout << "Iterasi ke-0" << endl;
+        cout << "Inisialisasi\n";
+        
         cout << "x = ";
         for (const auto& val : x) {
             cout << val << " ";
         }
-        cout << "y = ";
+        cout << endl << "y = ";
         for (const auto& val : y) {
             cout << val << " ";
         }
@@ -97,39 +99,16 @@ public:
         for (const auto& val : vy) {
             cout << val << " ";
         }
-        cout << endl << "pBestX = ";
-        for (const auto& val : pBestX) {
-            cout << val << " ";
-        }
-        cout << endl << "gBestX = " << gBestX;
-
-        cout << endl << "pBestY = ";
-        for (const auto& val : pBestY) {
-            cout << val << " ";
-        }
-        cout << endl << "gBestY = " << gBestY;
-        
-        cout << endl << "f(gBestX, gBestY) = " << f(gBestX, gBestY);
-
-        cout << endl <<"f(x,y) = ";
-        for (int i = 0; i < x.size() && i < y.size(); ++i) {
-            cout << f(x[i], y[i]) << " ";
-        }
         cout << endl;
         cout << endl;
 
         for (int i = 0; i < n; ++i) {
             cout << "Iterasi ke-" << i + 1 << endl;
-            findpBest();
-            findGBest();
-            updateV();
-            updateX();
-
             cout << "x = ";
             for (const auto& val : x) {
                 cout << val << " ";
             }
-            cout << "y = ";
+            cout << endl << "y = ";
             for (const auto& val : y) {
                 cout << val << " ";
             }
@@ -141,26 +120,45 @@ public:
             for (const auto& val : vy) {
                 cout << val << " ";
             }
+            cout << endl <<"f(x,y) = ";
+            for (int i = 0; i < x.size() && i < y.size(); ++i) {
+                cout << f(x[i], y[i]) << " ";
+            }
             cout << endl << "pBestX = ";
             for (const auto& val : pBestX) {
                 cout << val << " ";
             }
             cout << endl << "gBestX = " << gBestX;
 
-            cout << endl << "pBest = ";
+            cout << endl << "pBestY = ";
             for (const auto& val : pBestY) {
                 cout << val << " ";
             }
-            cout << endl << "gBestY = " << gBestY;
-            
-            cout << endl << "f(gBestX, gBestY) = " << f(gBestX, gBestY);
+            cout << endl << "gBestY = " << gBestY << endl;
 
-            cout << endl << "f(x,y) = ";
-            for (int i = 0; i < x.size(); ++i) {
-                cout << f(x[i], y[i]) << " ";
+            findpBest();
+            findGBest();
+            updateV();
+            updateX();
+
+            cout << endl <<"Updated x = ";
+            for (const auto &val : x) {
+                cout << val << " ";
             }
-            cout << endl;
-            cout << endl;
+            cout << endl << "Updated y = ";
+            for (const auto &val : y) {
+                cout << val << " ";
+            }
+            cout << endl << "Updated vx = ";
+            for (const auto &val : vx) {
+                cout << val << " ";
+            }
+            cout << endl << "Updated vy = ";
+            for (const auto &val : vy) {
+                cout << val << " ";
+            }
+            cout << "\n";
+            cout << "\n";
         }
     }
 };
@@ -175,7 +173,7 @@ int main() {
     double w = 1.0;
 
     PSO pso(x, y, vx, c, r, w);
-    pso.iterate(50);
+    pso.iterate(3);
 
     return 0;
 }
