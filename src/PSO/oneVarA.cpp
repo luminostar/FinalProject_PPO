@@ -3,7 +3,6 @@
 #include <cmath>
 #include <algorithm>
 #include <cstdlib>
-#include <random>
 
 using namespace std;
 
@@ -73,11 +72,11 @@ public:
 
         cout << "x = ";
         for (const auto &val : x) {
-        cout << val << " ";
+            cout << val << " ";
         }
         cout << endl << "v = ";
         for (const auto &val : v) {
-        cout << val << " ";
+            cout << val << " ";
         }
         cout << endl << "c = ";
         for (const auto& val : c) {
@@ -87,8 +86,9 @@ public:
         for (const auto& val : r) {
             cout << val << " ";
         }
-        cout << endl;
-        cout << endl;
+        cout << endl << "w = " << w;
+        cout << "\n";
+        cout << "\n";
 
         for (int i = 0; i < n; ++i) {
             cout << "Iterasi ke-" << i + 1 << endl;
@@ -104,19 +104,19 @@ public:
             for (const auto &val : x) {
                 cout << f(val) << " ";
             }
+            findPBest();
+            findGBest();
             cout << endl << "pBest = ";
             for (const auto &val : pBest) {
                 cout << val << " ";
             }
 
-            cout << endl << "gBest = " << gBest << endl;
+            cout << endl << "gBest = " << gBest << endl << endl;
 
-            findPBest();
-            findGBest();
             updateV();
             updateX();
 
-            cout << endl << "Updated x = ";
+            cout << "Updated x = ";
             for (const auto &val : x) {
                 cout << val << " ";
             }
@@ -131,27 +131,14 @@ public:
 };
 
 int main() {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_real_distribution<> disVar(-5.0, 5.0);
-    uniform_real_distribution<> disR(0, 1);
-
-    vector<double> x;
-    for (int i = 0; i < 3; ++i) {
-        double randNumX = disVar(gen);
-        x.push_back(randNumX);
-    } 
+    vector<double> x = {1.0, M_PI/2, M_PI}; 
     vector<double> v = {0, 0, 0};
     vector<double> c = {0.5, 1.0}; 
-    vector<double> r;
-    for (int i = 0; i < 2; ++i) {
-        double randNumR = disR(gen);
-        r.push_back(randNumR);
-    } 
+    vector<double> r = {1.0, 1.0};
     double w = 1;
 
     PSO pso(x, v, c, r, w);
-    pso.iterate(100);
+    pso.iterate(3);
 
     return 0;
 }
