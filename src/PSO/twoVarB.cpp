@@ -206,21 +206,21 @@ int main() {
     uniform_real_distribution<> disR(0, 1);
 
     vector<double> x;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 3; ++i) {
         double randNumX = disVar(gen);
         x.push_back(randNumX);
     }
     vector<double> y;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 3; ++i) {
         double randNumY = disVar(gen);
         y.push_back(randNumY);
     }
     vector<double> vx;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 3; ++i) {
         vx.push_back(0);
     }
     vector<double> vy;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 3; ++i) {
         vy.push_back(0);
     }
     vector<double> c = {1.0, 0.5}; 
@@ -234,7 +234,7 @@ int main() {
     double tolerance = 1e-5; // Tentukan nilai toleransi untuk konvergensi
 
     PSO pso(x, y, vx, c, r, w);
-    pso.iterate(100, tolerance); // Ubah menjadi fungsi iterate dengan tambahan parameter tolerance
+    pso.iterate(200, tolerance); // Ubah menjadi fungsi iterate dengan tambahan parameter tolerance
 
     return 0;
 }

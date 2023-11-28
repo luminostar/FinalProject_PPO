@@ -158,12 +158,12 @@ int main() {
     uniform_real_distribution<> disR(0, 1);
 
     vector<double> x ;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 3; ++i) {
         double randNumX = disVar(gen);
         x.push_back(randNumX);
     } 
     vector<double> v;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 3; ++i) {
         v.push_back(0);
     }
     vector<double> c = {0.5, 1.0}; 
