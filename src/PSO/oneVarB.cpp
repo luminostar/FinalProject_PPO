@@ -177,7 +177,7 @@ int main() {
     double tolerance = 1e-5; // Tentukan nilai toleransi untuk konvergensi
 
     PSO pso(x, v, c, r, w);
-    pso.iterate(100, tolerance); // Ubah menjadi fungsi iterate dengan tambahan parameter tolerance
+    pso.iterate(200, tolerance); // Ubah menjadi fungsi iterate dengan tambahan parameter tolerance
 
     return 0;
 }
