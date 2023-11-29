@@ -84,6 +84,7 @@ public:
     void iterate(int n, double tolerance) {
         double prevBest = f(gBestX, gBestY);
         int unchangedCount = 0;
+        
         cout << "Inisialisasi\n";
         
         cout << "x = ";
@@ -177,22 +178,20 @@ public:
                 cout << val << " ";
             }
 
-            double currentBest = f(gBestX, gBestY); // Hitung nilai fungsi objektif pada iterasi saat ini
+            double currentBest = f(gBestX, gBestY); 
 
-            // Periksa perbedaan nilai fungsi objektif antara iterasi saat ini dan sebelumnya
             if (abs(currentBest - prevBest) < tolerance) {
-                unchangedCount++; // Jika perbedaannya kecil, tambahkan hitungan nilai yang tidak berubah
+                unchangedCount++; 
             } else {
-                unchangedCount = 0; // Jika ada perubahan, reset hitungan nilai yang tidak berubah
+                unchangedCount = 0; 
             }
 
-            // Jika nilai fungsi objektif tidak berubah dalam beberapa iterasi, hentikan iterasi
-            if (unchangedCount >= 5) { // Misalnya, hentikan setelah 5 iterasi tanpa perubahan (sesuaikan sesuai kebutuhan)
+            if (unchangedCount >= 5) { 
                 cout << endl << "Iterasi dihentikan karena konvergensi telah tercapai." << endl;
                 break;
             }
 
-            prevBest = currentBest; // Simpan nilai fungsi objektif pada iterasi sebelumnya untuk iterasi berikutnya
+            prevBest = currentBest;
             cout << "\n";
             cout << "\n";
         }
@@ -231,10 +230,10 @@ int main() {
     }
     double w = 1.0;
 
-    double tolerance = 1e-5; // Tentukan nilai toleransi untuk konvergensi
+    double tolerance = 1e-5;
 
     PSO pso(x, y, vx, c, r, w);
-    pso.iterate(200, tolerance); // Ubah menjadi fungsi iterate dengan tambahan parameter tolerance
+    pso.iterate(200, tolerance); 
 
     return 0;
 }
